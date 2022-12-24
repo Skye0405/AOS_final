@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AOS</string>
+    <string name="btntext">button</string>
 </resources>
