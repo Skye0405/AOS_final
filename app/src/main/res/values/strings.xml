@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">AOS</string>
-    <string name="btntext">button</string>
+    <string name="title">神奇的公車APP</string>
+    <string name="scanstopsign">掃描\n站牌</string>
+    <string name="choosebus">選擇公車</string>
+    <string name="station">站點</string>
+    <string name="enter">確定</string>
+    <string name="cancel">取消</string>
 </resources>
