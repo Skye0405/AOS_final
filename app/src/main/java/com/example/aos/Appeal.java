@@ -3,9 +3,7 @@ package com.example.aos;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,7 +19,7 @@ public class Appeal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appeal);
         appeal = findViewById(R.id.mail);
-        cancel = findViewById(R.id.cancel);
+        cancel = findViewById(R.id.previous);
         location = findViewById(R.id.location);
         time = findViewById(R.id.time);
         bus_number = findViewById(R.id.bus_number);
@@ -32,7 +30,7 @@ public class Appeal extends AppCompatActivity {
         content = findViewById(R.id.content);
         send = findViewById(R.id.send);
 
-        cancel.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
+        cancel.setOnClickListener(view -> finish());//startActivity(new Intent(this, MainActivity.class))
 
         send.setOnClickListener(view -> {
             String s_location = location.getText().toString();

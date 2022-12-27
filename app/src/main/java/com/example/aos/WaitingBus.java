@@ -7,31 +7,34 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class WaitingBus extends AppCompatActivity {
     TextView title;
-    Button scan;
+    Button wait, cancel;
     Button appeal, record, collection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_waiting_bus);
         title = findViewById(R.id.title);
-        scan = findViewById(R.id.scan);
+        wait = findViewById(R.id.wait);
+        cancel = findViewById(R.id.cancel);
         appeal = findViewById(R.id.appeal);
         record = findViewById(R.id.record);
         collection = findViewById(R.id.collection);
 
-        scan.setOnClickListener(view -> {
-            Intent scan_intent = new Intent(MainActivity.this, ChooseBus.class);
-            //開啟相機 掃描QR code
-            startActivity(scan_intent);
+        wait.setOnClickListener(view -> {
+            //檢查資料庫變動 直到公車到站
+            Intent on_intent = new Intent(this, OnBus.class);
+            startActivity(on_intent);
+            finish();
         });
 
+        cancel.setOnClickListener(view -> finish());
+
         appeal.setOnClickListener(view -> {
-            Intent appeal_intent = new Intent(MainActivity.this, Appeal.class);
+            Intent appeal_intent = new Intent(this, Appeal.class);
             startActivity(appeal_intent);
         });
-        //setContentView(R.layout.scanner);
     }
 }
