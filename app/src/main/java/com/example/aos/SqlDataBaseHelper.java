@@ -29,13 +29,24 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
                 "Count INT DEFAULT 0 not null" +
                 ")";
         sqLiteDatabase.execSQL(SqlTable1);
-
+        String SqlTable2 = "CREATE TABLE IF NOT EXISTS passenger(" +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Pid varchar (30) not null," +
+                "busNum varchar (10) not null," +
+                "OnStop varchar (10)," +
+                "OffStop varchar (10)," +
+                "getonTime datetime," +
+                "getOffTime datetime," +
+                "License varchar (10)" +
+                ")";
+        sqLiteDatabase.execSQL(SqlTable2);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         //String SQL = "DROP TABLE " + DataBaseTable;
         sqLiteDatabase.execSQL("DROP TABLE bus_geton");
-        sqLiteDatabase.execSQL("DROP TABLE bus_getoff ");
+        sqLiteDatabase.execSQL("DROP TABLE bus_getoff");
+        sqLiteDatabase.execSQL("DROP TABLE passenger");
     }
 }
