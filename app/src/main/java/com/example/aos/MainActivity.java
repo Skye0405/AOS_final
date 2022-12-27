@@ -66,26 +66,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //WU
-    //確定上車(更新上車時間、車牌)
-    private  void geton(String Pid,String License){
-        //passengere更新上車時間、車牌
-
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat sf= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String currenttime = sf.format(c.getTime());
-        db.execSQL("UPDATE passenger SET getonTime = '" + currenttime + "', License = '" + License + "' WHERE Pid = '" + Pid + "' and getonTime is null");
-        System.out.println("現在時間:"+ currenttime);
-
-        //顯示更新的資料
-        Cursor cs = db.rawQuery("SELECT Pid,getonTime,License FROM passenger WHERE Pid = '" + Pid + "'", null);
-        while (cs.moveToNext()){
-            System.out.println("Pid:"+ cs.getString(0));
-            System.out.println("getonTime:"+ cs.getString(1));
-            System.out.println("License:"+ cs.getString(2));
-        }
-        cs.close();
-
-    }
 
     //bus新增資料
     private void addBusData ( ) {
@@ -145,66 +125,6 @@ public class MainActivity extends AppCompatActivity {
                 new int[]{android.R.id.text1, android.R.id.text2}
         );
         Listview1.setAdapter(SA);
-    }
-    //關門時->公車清空預約人數,更新公車位置，更新乘客下車時間
-    private void UpdateBusDB(String License, String busStop){//車牌號碼, 站牌
-        String[] Stop= busStop.split("-");
-        String Tail = Stop[1];
-        int stopInt = Integer.valueOf(Stop[1]) + 1;
-        String nextStop = busStop.replace(Tail, Integer.toString(stopInt));
-        if(stopInt > 9){
-            nextStop = busStop.replace(Tail, "1");
-        }
-        System.out.println("busStop:"+ busStop);
-        System.out.println("nextStop:"+ nextStop);
-        //bus_geton人數歸零
-        db.execSQL("UPDATE bus_geton SET Count = 0 WHERE busStop = '" + busStop + "'");
-        //bus_getoff更新位置
-        db.execSQL("UPDATE bus_getoff SET busStop = '" + nextStop + "' WHERE License = '" + License + "'");
-        //passengere更新下車時間
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat sf= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String currenttime = sf.format(c.getTime());
-        db.execSQL("UPDATE passenger SET getoffTime = '" + currenttime + "' WHERE License = '" + License + "' and OnStop = '" + busStop + "' and getoffTime is null");// and getoffTime is null
-
-        Cursor cs = db.rawQuery("SELECT Pid, getoffTime FROM passenger WHERE License = '" + License + "'", null);
-        while (cs.moveToNext()){
-            System.out.println("Pid:"+ cs.getString(0));
-            System.out.println("getoffTime:"+ cs.getString(1));
-        }
-
-        cs = db.rawQuery("SELECT busStop FROM bus_getoff WHERE License = '" + License + "'", null);
-        while (cs.moveToNext()){
-            System.out.println("公車位置:"+ cs.getString(0));
-        }
-        cs.close();
-    }
-    //通知->抓資料
-    private void UpdateonDB(String License){//先找預約下車的人數//要去客戶資料抓......
-        Cursor cs = db.rawQuery("SELECT busStop,Count FROM bus_getoff WHERE License = '" + License + "'", null);
-        int id = 0;
-        String Stop = "";
-        while (cs.moveToNext()){
-            Stop = cs.getString(0);
-            id = Integer.valueOf(cs.getString(1));
-        }
-        cs.close();
-        if(id < 1){
-            //找預約上車的人
-            //有沒有需要篩busNum?
-            cs = db.rawQuery("SELECT Count FROM bus_geton WHERE busStop = '" + Stop + "'", null);
-            while (cs.moveToNext()){
-                id = Integer.valueOf(cs.getString(0));
-            }
-        }else{
-            //清空下車人數
-            db.execSQL("UPDATE bus_getoff SET Count = 0 WHERE License = '" + License + "'");
-        }
-        cs.close();
-        //有人要上車或要下車
-        if(id > 0){
-            //要發出停車通知
-        }
     }
 
 }

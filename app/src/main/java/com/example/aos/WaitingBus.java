@@ -23,7 +23,7 @@ public class WaitingBus extends AppCompatActivity {
     String Pid = "111111";//乘客ID
     SqlDataBaseHelper DH = null;
     SQLiteDatabase db ;
-    String OnStop = "";
+    String OnStop = "";//預約的上車站
     String busNum = "";
     String License = "";//獲得車牌號
     @Override
@@ -49,24 +49,38 @@ public class WaitingBus extends AppCompatActivity {
         }
         cs.close();
 
+
+
         //檢查資料庫變動 直到公車到站(待檢查)
         String[] Stop= OnStop.split(".");
         String stopStr = Integer.toString(Integer.valueOf(Stop[0]) + 1);
         while(1 == 1){
+            //demo用---
+            Cursor cr = db.rawQuery("SELECT busStop FROM bus_geton where busStop like '" + stopStr + ".%' and busNum = '" + busNum + "'", null);
+            String nextStop = "";
+            while (cs.moveToNext()){
+                nextStop = cs.getString(0);
+                System.out.println("下一站:"+ nextStop);
+            }
+            cr.close();
+            db.execSQL("UPDATE bus_getoff SET busStop ='" + nextStop + "' WHERE busNum = '" + busNum + "'");
+            //----demo用
+
             try {
+                // 休眠 30 秒
+                TimeUnit.SECONDS.sleep(30);
                 Cursor c = db.rawQuery("SELECT License FROM bus_getoff where busStop = '" + stopStr + "%' and busNum = '" + busNum + "'", null);
                 License = "";//獲得車牌號
                 while (c.moveToNext()){
                     License = c.getString(0);
-                    System.out.println("下一站:"+ cs.getString(0));
+                    System.out.println("車牌:"+ cs.getString(0));
                 }
                 c.close();
                 if(!License.equals("")){
                     //找到車牌了
                     break;
                 }
-                // 休眠 30 秒
-                TimeUnit.SECONDS.sleep(30);
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
