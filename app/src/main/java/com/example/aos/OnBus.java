@@ -8,9 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class OnBus extends AppCompatActivity {
-    TextView title;
-    Button on_bus;
+    TextView title, on_bus;
     Button appeal, record, collection;
+    Button arrive, destination;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +21,18 @@ public class OnBus extends AppCompatActivity {
         appeal = findViewById(R.id.appeal);
         record = findViewById(R.id.record);
         collection = findViewById(R.id.collection);
+        destination = findViewById(R.id.destination);
+        arrive = findViewById(R.id.arrive);
 
-        on_bus.setOnClickListener(view -> {
-            //檢查資料庫變動 直到公車到站
+        //檢查資料庫變動 直到公車到站
+
+        arrive.setOnClickListener(view -> {
             finish();
+        });
+
+        destination.setOnClickListener(view -> {
+            Intent choose_station_intent = new Intent(this, ChooseStation.class);
+            startActivity(choose_station_intent);
         });
 
         appeal.setOnClickListener(view -> {
