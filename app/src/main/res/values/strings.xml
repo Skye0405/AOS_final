@@ -1,14 +1,18 @@
 <resources>
     <string name="app_name">AOS</string>
+
+    <!--homepage-->
     <string name="title">神奇的公車APP</string>
     <string name="scan_stop_sign">掃描\n站牌</string>
     <string name="choose_bus">選擇公車</string>
     <string name="station">站點</string>
     <string name="enter">確定</string>
-    <string name="cancel">取消</string>
+    <string name="previous">上一頁</string>
     <string name="appeal">我有話要說</string>
     <string name="record">搭車紀錄</string>
     <string name="collection">集點</string>
+
+    <!--appeal-->
     <string name="text_hint">說些什麼</string>
     <string name="text_location">*地點</string>
     <string name="text_time">*時間</string>
@@ -19,4 +23,11 @@
     <string name="text_user_name">聯絡人</string>
     <string name="text_contact">聯絡資料</string>
     <string name="send">送出</string>
+
+    <!--waiting bus-->
+    <string name="waiting_bus">等待\n公車</string>
+    <string name="cancel">取消</string>
+
+    <!--on bus-->
+    <string name="on_bus">乘車中</string>
 </resources>

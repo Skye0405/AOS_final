@@ -26,7 +26,7 @@ import java.util.TimeZone;
 public class MainActivity extends AppCompatActivity {
     TextView title;
     Button scan;
-    Button appeal;
+    Button appeal, record, collection;
 
     //wu
     public SqlDataBaseHelper DH = null;
@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         title = findViewById(R.id.title);
         scan = findViewById(R.id.scan);
         appeal = findViewById(R.id.appeal);
+        record = findViewById(R.id.record);
+        collection = findViewById(R.id.collection);
 
         scan.setOnClickListener(view -> {
             Intent scan_intent = new Intent(MainActivity.this, ChooseBus.class);
