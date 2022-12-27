@@ -3,6 +3,8 @@ package com.example.aos;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +14,9 @@ public class Appeal extends AppCompatActivity {
     TextView appeal;
     EditText location, time, bus_number, driver, user, contact, subject, content;
     Button cancel, send;
+
+    public SqlDataBaseHelper DH = null;
+    public SQLiteDatabase db ;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -32,6 +37,8 @@ public class Appeal extends AppCompatActivity {
 
         cancel.setOnClickListener(view -> finish());//startActivity(new Intent(this, MainActivity.class))
 
+
+
         send.setOnClickListener(view -> {
             String s_location = location.getText().toString();
             String s_time = time.getText().toString();
@@ -47,7 +54,25 @@ public class Appeal extends AppCompatActivity {
             else
                 System.out.println("Non empty");
 
+            //可能要加必填訊息未填的錯誤訊息(跳對話窗等等)
+
             //判斷必填資料 送資料庫
+            DH = new SqlDataBaseHelper(this);
+            db = DH.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("Location",s_location);
+            values.put("Time",s_time);
+            values.put("License",s_bus_number);
+            if (!s_driver.isEmpty()){
+                values.put("Driver",s_driver);
+            }
+            values.put("Subject",s_subject);
+            values.put("Content",s_content);
+            values.put("Passenger",s_user);
+            if (!s_contact.isEmpty()){
+                values.put("Contact",s_contact);
+            }
+            db.insert("complain",null,values);
         });
     }
 }

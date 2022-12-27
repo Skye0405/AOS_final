@@ -54,6 +54,22 @@ public class MainActivity extends AppCompatActivity {
             startActivity(appeal_intent);
         });
         //setContentView(R.layout.scanner);
+
+        DH = new SqlDataBaseHelper(this);
+        db = DH.getWritableDatabase();
+        db.execSQL("DROP TABLE complain");
+        String SqlTable = "CREATE TABLE IF NOT EXISTS complain(" +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Location varchar (30) not null," +
+                "Time varchar (30) not null," +
+                "License varchar (10) not null," +
+                "Driver varchar (10),"+
+                "Subject varchar (50) not null," +
+                "Content varchar (100) not null," +
+                "Passenger varchar (10)," +
+                "Contact varchar (200)" +
+                ")";
+        db.execSQL(SqlTable);
         /*
         //wu
         setContentView(R.layout.activity_buslist);
@@ -241,8 +257,7 @@ public class MainActivity extends AppCompatActivity {
         cs.close();
     }
     //通知->抓資料
-    private void UpdateonDB(String License){//先找預約下車的人數
-        //要去客戶資料抓......
+    private void UpdateonDB(String License){//先找預約下車的人數//要去客戶資料抓......
         Cursor cs = db.rawQuery("SELECT busStop,Count FROM bus_getoff WHERE License = '" + License + "'", null);
         int id = 0;
         String Stop = "";
