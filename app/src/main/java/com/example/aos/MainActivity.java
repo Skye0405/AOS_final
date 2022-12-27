@@ -55,23 +55,8 @@ public class MainActivity extends AppCompatActivity {
         });
         //setContentView(R.layout.scanner);
 
-        DH = new SqlDataBaseHelper(this);
-        db = DH.getWritableDatabase();
-        db.execSQL("DROP TABLE complain");
-        String SqlTable = "CREATE TABLE IF NOT EXISTS complain(" +
-                "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "Location varchar (30) not null," +
-                "Time varchar (30) not null," +
-                "License varchar (10) not null," +
-                "Driver varchar (10),"+
-                "Subject varchar (50) not null," +
-                "Content varchar (100) not null," +
-                "Passenger varchar (10)," +
-                "Contact varchar (200)" +
-                ")";
-        db.execSQL(SqlTable);
-        /*
         //wu
+/*
         setContentView(R.layout.activity_buslist);
         DH = new SqlDataBaseHelper(this);
         db = DH.getWritableDatabase();
@@ -149,14 +134,7 @@ public class MainActivity extends AppCompatActivity {
             db.insert("passenger",null,values);
             //上車人數+1
             db.execSQL("UPDATE bus_geton SET Count =Count + 1 WHERE busStop = '" + OnStop + "'");
-            //顯示有無存入
-            Cursor cs = db.rawQuery("SELECT Pid,busNum,OnStop FROM passenger WHERE Pid = '" + Pid + "'", null);
-            while (cs.moveToNext()){
-                Log.i("Pid:",cs.getString(0));
-                Log.i("busNum:",cs.getString(1));
-                Log.i("OnStop:",cs.getString(2));
-            }
-            cs.close();
+
         }else{
             //下車紀錄(找最新一筆) -->error
             db.execSQL("UPDATE passenger SET OffStop ='" + OffStop + "' WHERE Pid = '" + Pid + "' and busNum = '" + busNum + "' and OffStop is null");
