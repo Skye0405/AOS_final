@@ -25,7 +25,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:background="@drawable/round_button"
-        android:text="@string/scanstopsign"
+        android:text="@string/scan_stop_sign"
         android:textColor="#FFFFFF"
         android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -26,28 +26,263 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="120dp"
-        android:gravity="start|top"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mail"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/mail">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text"
+        <!--<LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="start|top"
-            android:hint="@string/text_hint"
-            android:textColorHint="#616161"
-            tools:ignore="TextContrastCheck" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
+        -->
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/border"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mail"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="UselessParent">
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:text="@string/text_location"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:autofillHints=""
+                    android:background="@drawable/border"
+                    android:inputType="text"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:text="@string/text_time"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:autofillHints=""
+                    android:background="@drawable/border"
+                    android:inputType="text"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:text="@string/text_bus_number"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/bus_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:autofillHints=""
+                    android:background="@drawable/border"
+                    android:inputType="text"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck,TextFields" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="12dp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:text="@string/text_driver"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/driver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:autofillHints=""
+                    android:background="@drawable/border"
+                    android:inputType="text"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:text="@string/text_user_name"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:autofillHints=""
+                    android:background="@drawable/border"
+                    android:inputType="text"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:text="@string/text_contact"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/contact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:autofillHints=""
+                    android:background="@drawable/border"
+                    android:inputType="text"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="12dp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:text="@string/text_subject"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/subject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:autofillHints=""
+                    android:background="@drawable/border"
+                    android:inputType="text"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:text="@string/text_content"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow>
+
+                <EditText
+                    android:id="@+id/content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_span="2"
+                    android:layout_weight="1"
+                    android:autofillHints=""
+                    android:background="@drawable/border"
+                    android:inputType="textMultiLine|text"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+            </TableRow>
+        </TableLayout>
+
+
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="170dp" />
+
+    <Button
+        android:id="@+id/send"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginBottom="35dp"
+        android:text="@string/send"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
