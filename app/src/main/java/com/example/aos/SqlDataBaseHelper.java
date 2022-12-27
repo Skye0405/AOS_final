@@ -1,9 +1,12 @@
 package com.example.aos;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
 
 public class SqlDataBaseHelper extends SQLiteOpenHelper {
     private static final String DataBaseName = "DataBase";
@@ -24,9 +27,9 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SqlTable);
         String SqlTable1 = "CREATE TABLE IF NOT EXISTS bus_getoff(" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "License varchar (30) not null," +
-                "busStop varchar (10) not null," +
-                "Count INT DEFAULT 0 not null" +
+                "License varchar (10) not null," +
+                "busNum varchar (10) not null," +
+                "busStop varchar (10) not null" +
                 ")";
         sqLiteDatabase.execSQL(SqlTable1);
         String SqlTable2 = "CREATE TABLE IF NOT EXISTS passenger(" +
@@ -40,6 +43,53 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
                 "License varchar (10)" +
                 ")";
         sqLiteDatabase.execSQL(SqlTable2);
+        String SqlTable3 = "CREATE TABLE IF NOT EXISTS complain(" +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Location varchar (30) not null," +
+                "Time varchar (30) not null," +
+                "License varchar (10) not null," +
+                "Driver varchar (10)," +
+                "Subject varchar (30) not null," +
+                "Content varchar (200) not null," +
+                "Passenger varchar (10)," +
+                "Contact varchar (10)" +
+                ")";
+        sqLiteDatabase.execSQL(SqlTable3);
+        ArrayList<String> busNum = new ArrayList<>();
+        ArrayList<String> busStop1 = new ArrayList<>();
+        ArrayList<String> busStop2 = new ArrayList<>();
+        busNum.add("100");
+        busNum.add("20");
+        busStop1.add("1.中山一路");
+        busStop1.add("2.中山二路");
+        busStop1.add("3.中山三路");
+        busStop1.add("4.中山四路");
+        busStop1.add("5.臨海一路");
+        busStop1.add("6.臨海二路");
+        busStop1.add("7.臨海三路");
+        busStop1.add("8.臨海四路");
+        busStop1.add("9.建國路");
+        busStop2.add("1.中山一路");
+        busStop2.add("2.中山二路");
+        busStop2.add("3.中山三路");
+        busStop2.add("4.中山四路");
+        busStop2.add("5.五福一路");
+        busStop2.add("6.五福二路");
+        busStop2.add("7.五福三路");
+        busStop2.add("8.五福四路");
+        busStop2.add("9.青年一路");
+        for(int j = 0; j < busStop1.size(); j++) {
+            String addData = "INSERT INTO bus_geton(busNum, busStop, Count)" +
+                    "VALUES('" + busNum.get(0) + "', '" + busStop1.get(j) + "', 0)";
+            sqLiteDatabase.execSQL(addData);
+            addData = "INSERT INTO bus_geton(busNum, busStop, Count)" +
+                    "VALUES('" + busNum.get(1) + "', '" + busStop2.get(j) + "', 0)";
+            sqLiteDatabase.execSQL(addData);
+        }
+        String addData = "INSERT INTO bus_getoff(License, busNum, busStop)" +
+                "VALUES('uuu-1111', '100', '中山一路')";
+        sqLiteDatabase.execSQL(addData);
+        System.out.println("成功了喔喔喔喔喔喔喔喔喔喔喔喔喔喔喔喔");
     }
 
     @Override

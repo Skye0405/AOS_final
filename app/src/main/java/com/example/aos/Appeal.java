@@ -56,7 +56,8 @@ public class Appeal extends AppCompatActivity {
 
             //可能要加必填訊息未填的錯誤訊息(跳對話窗等等)
 
-            //判斷必填資料 送資料庫
+
+            //判斷必填資料 送資料庫(已完成)
             DH = new SqlDataBaseHelper(this);
             db = DH.getWritableDatabase();
             ContentValues values = new ContentValues();
@@ -69,10 +70,15 @@ public class Appeal extends AppCompatActivity {
             values.put("Subject",s_subject);
             values.put("Content",s_content);
             values.put("Passenger",s_user);
+            if (!s_user.isEmpty()){
+                values.put("Passenger",s_user);
+            }
             if (!s_contact.isEmpty()){
                 values.put("Contact",s_contact);
             }
             db.insert("complain",null,values);
+
+            finish();
         });
     }
 }
