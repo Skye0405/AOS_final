@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TextView title;
     Button scan;
     Button appeal, record, collection;
+    Button driver;
 
     //wu
     public SqlDataBaseHelper DH = null;
@@ -42,11 +43,18 @@ public class MainActivity extends AppCompatActivity {
         appeal = findViewById(R.id.appeal);
         record = findViewById(R.id.record);
         collection = findViewById(R.id.collection);
+        driver = findViewById(R.id.driver);
 
         scan.setOnClickListener(view -> {
             Intent scan_intent = new Intent(MainActivity.this, ChooseBus.class);
             //開啟相機 掃描QR code
             startActivity(scan_intent);
+        });
+
+        driver.setOnClickListener(view -> {
+            Intent driver_intent = new Intent(MainActivity.this, Driver.class);
+            //司機模式
+            startActivity(driver_intent);
         });
 
         appeal.setOnClickListener(view -> {
