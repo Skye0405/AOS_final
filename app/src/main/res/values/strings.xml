@@ -25,6 +25,16 @@
     <string name="text_contact">聯絡資料</string>
     <string name="send">送出</string>
 
+    <!--record-->
+    <string name="record_passenger">乘客</string>
+    <string name="record_bus_number">車號</string>
+    <string name="record_on">上車站點</string>
+    <string name="record_off">下車站點</string>
+    <string name="record_date">日期</string>
+    <string name="record_on_time">上車時間</string>
+    <string name="record_off_time">下車時間</string>
+    <string name="record_license">憑證</string>
+
     <!--waiting bus-->
     <string name="waiting_bus">等待\n公車</string>
     <string name="cancel">取消</string>

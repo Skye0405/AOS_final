@@ -40,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
             Intent appeal_intent = new Intent(MainActivity.this, Appeal.class);
             startActivity(appeal_intent);
         });
+
+        record.setOnClickListener(view -> {
+            Intent record_intent = new Intent(MainActivity.this, Record.class);
+            startActivity(record_intent);
+        });
         //setContentView(R.layout.scanner);
     }
 }
