@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
     TextView title;
     Button scan;
     Button appeal, record, collection;
-    Button driver;
+    Button driver, movement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         record = findViewById(R.id.record);
         collection = findViewById(R.id.collection);
         driver = findViewById(R.id.driver);
+        movement = findViewById(R.id.movement);
 
         scan.setOnClickListener(view -> {
             Intent scan_intent = new Intent(MainActivity.this, ChooseBus.class);
@@ -34,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
             Intent driver_intent = new Intent(MainActivity.this, Driver.class);
             //司機模式
             startActivity(driver_intent);
+        });
+
+        movement.setOnClickListener(view -> {
+            Intent movement_intent = new Intent(MainActivity.this, BusList.class);
+            startActivity(movement_intent);
         });
 
         appeal.setOnClickListener(view -> {
