@@ -14,6 +14,9 @@
     <string name="record">搭車紀錄</string>
     <string name="collection">集點</string>
 
+    <!--qrcode scanner-->
+    <string name="scanner">掃描站牌</string>
+
     <!--appeal-->
     <string name="text_hint">說些什麼</string>
     <string name="text_location">*地點</string>

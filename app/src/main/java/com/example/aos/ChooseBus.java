@@ -22,6 +22,8 @@ public class ChooseBus extends AppCompatActivity {
         enter = findViewById(R.id.enter);
         scan = findViewById(R.id.wait);
 
+        String get_station = getIntent().getStringExtra("STATION");
+        station.setText(get_station);
         //讀取資料庫 該站點所有公車車號
         /*
         ArrayList<String> bus_list = new ArrayList<>();

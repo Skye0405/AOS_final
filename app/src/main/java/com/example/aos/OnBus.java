@@ -39,5 +39,10 @@ public class OnBus extends AppCompatActivity {
             Intent appeal_intent = new Intent(this, Appeal.class);
             startActivity(appeal_intent);
         });
+
+        record.setOnClickListener(view -> {
+            Intent record_intent = new Intent(this, Record.class);
+            startActivity(record_intent);
+        });
     }
 }

@@ -9,6 +9,6 @@ public class BusList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buslist);
+        setContentView(R.layout.activity_appeal);//buslist);
     }
 }

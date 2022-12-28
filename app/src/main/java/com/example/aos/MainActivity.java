@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
         movement = findViewById(R.id.movement);
 
         scan.setOnClickListener(view -> {
-            Intent scan_intent = new Intent(MainActivity.this, ChooseBus.class);
             //開啟相機 掃描QR code
-            startActivity(scan_intent);
+            Intent scanner_intent = new Intent(MainActivity.this, QrcodeScanner.class);
+            startActivity(scanner_intent);
         });
 
         driver.setOnClickListener(view -> {
