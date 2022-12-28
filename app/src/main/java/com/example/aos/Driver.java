@@ -33,7 +33,7 @@ public class Driver extends AppCompatActivity {
 
         DH = new SqlDataBaseHelper(this);
         db = DH.getWritableDatabase();
-        Cursor c = db.rawQuery("SELECT busStop FROM bus_getoff where License = 'uuu-1111'", null);
+        Cursor c = db.rawQuery("SELECT busStop FROM Bus where License = 'uuu-1111'", null);
         busStop = "";//獲得車牌號
         while (c.moveToNext()){
             busStop = c.getString(0);
@@ -45,7 +45,11 @@ public class Driver extends AppCompatActivity {
         //關門時->公車清空預約人數,更新公車位置，更新乘客下車時間
         leave.setOnClickListener(view -> {
             String Sub_Num= busStop.split(".")[0];
-            String stopStr = Integer.toString(Integer.valueOf(Sub_Num) + 1);
+            int stopInt = Integer.valueOf(Sub_Num) + 1;
+            if(stopInt > 9){
+                stopInt = 1;
+            }
+            String stopStr = Integer.toString(stopInt);
             Cursor cr = db.rawQuery("SELECT busStop FROM bus_geton where busStop like '" + stopStr + ".%' and busNum = '100'", null);
             String nextStop = "";
             while (cr.moveToNext()){
@@ -55,12 +59,12 @@ public class Driver extends AppCompatActivity {
             System.out.println("busStop:"+ busStop);
             System.out.println("nextStop:"+ nextStop);
             //bus_geton人數歸零
-            db.execSQL("UPDATE bus_geton SET Count = 0 WHERE busStop = '" + busStop + "'");
-            //bus_getoff更新位置
-            db.execSQL("UPDATE bus_getoff SET busStop = '" + nextStop + "' WHERE License = 'uuu-1111'");
+            db.execSQL("UPDATE bus_geton SET Count = 0 WHERE busStop = '" + busStop + "' and busNum = '100'");
+            //Bus更新位置
+            db.execSQL("UPDATE Bus SET busStop = '" + nextStop + "' WHERE License = 'uuu-1111'");
             //passengere更新下車時間
             Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sf= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat sf= new SimpleDateFormat("hh:mm:ss");
             String currenttime = sf.format(cal.getTime());
             db.execSQL("UPDATE passenger SET getoffTime = '" + currenttime + "' WHERE License = 'uuu-1111' and OnStop = '" + busStop + "' and getoffTime is null");// and getoffTime is null
 
@@ -71,7 +75,7 @@ public class Driver extends AppCompatActivity {
                 System.out.println("getoffTime:"+ cs.getString(1));
             }
             //確認站牌更新成功
-            cs = db.rawQuery("SELECT busStop FROM bus_getoff WHERE License = 'uuu-1111'", null);
+            cs = db.rawQuery("SELECT busStop FROM Bus WHERE License = 'uuu-1111'", null);
             while (cs.moveToNext()){
                 System.out.println("公車位置:"+ cs.getString(0));
             }

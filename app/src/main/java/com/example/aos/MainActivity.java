@@ -68,6 +68,12 @@ public class MainActivity extends AppCompatActivity {
         });
         //setContentView(R.layout.scanner);
 
+        /*
+        setContentView(R.layout.activity_buslist);
+        DH = new SqlDataBaseHelper(this);
+        db = DH.getWritableDatabase();
+        queryBusDB();//查詢上車資料
+         */
     }
 
     //WU
@@ -94,31 +100,18 @@ public class MainActivity extends AppCompatActivity {
     //查詢資料
     private void queryBusDB() {
         Listview1 = (ListView) findViewById(R.id.LV);
-        Cursor c= db.query("bus_geton", new String[]{"_id","busNum", "busStop", "Count"}, null, null, null, null, null, null);
+        Cursor c = db.rawQuery("SELECT busNum, busStop, Count FROM bus_geton ORDER BY busNum", null);
+        //Cursor c= db.query("bus_geton", new String[]{"busNum", "busStop", "Count"}, null, null, null, null, new String(busNum), null);
         List<Map<String, Object>> items = new ArrayList<Map<String, Object>>();
         //放入ArrayList
         c.moveToFirst();
         for (int i = 0; i < c.getCount(); i++) {
             Map<String, Object> item = new HashMap<String, Object>();
-            item.put("_id", c.getString(0) + "," + c.getString(1));
-            item.put("busStop", c.getString(2) + "," + c.getString(3));
+            item.put("busNum", c.getString(0) + "->" + c.getString(1));
+            item.put("Count", "上車預約人數:" + c.getString(2));
             items.add(item);
             c.moveToNext();
         }
-        //加入下車資訊
-        /*
-        c= db.query("bus_getoff", new String[]{"_id","License", "busStop", "Count"}, null, null, null, null, null, null);
-        //放入ArrayList
-        c.moveToFirst();
-        for (int i = 0; i < c.getCount(); i++) {
-            Map<String, Object> item = new HashMap<String, Object>();
-            item.put("_id", c.getString(0) + "," + c.getString(1));
-            item.put("busStop", c.getString(2) + "," + c.getString(3));
-            items.add(item);
-            c.moveToNext();
-        }
-
-         */
         c.close();
 
         //秀出資料
@@ -126,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 this,
                 items,
                 android.R.layout.simple_expandable_list_item_2,
-                new String[]{"_id", "busStop"},
+                new String[]{"busNum", "Count"},
                 new int[]{android.R.id.text1, android.R.id.text2}
         );
         Listview1.setAdapter(SA);

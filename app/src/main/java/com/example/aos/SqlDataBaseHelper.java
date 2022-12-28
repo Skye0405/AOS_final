@@ -25,7 +25,7 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
                 "Count INT DEFAULT 0 not null" +
                 ")";
         sqLiteDatabase.execSQL(SqlTable);
-        String SqlTable1 = "CREATE TABLE IF NOT EXISTS bus_getoff(" +
+        String SqlTable1 = "CREATE TABLE IF NOT EXISTS Bus(" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "License varchar (10) not null," +
                 "busNum varchar (10) not null," +
@@ -38,8 +38,9 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
                 "busNum varchar (10) not null," +
                 "OnStop varchar (10)," +
                 "OffStop varchar (10)," +
-                "getonTime datetime," +
-                "getOffTime datetime," +
+                "Date varchar (10)," +
+                "getonTime varchar (10)," +
+                "getOffTime varchar (10)," +
                 "License varchar (10)" +
                 ")";
         sqLiteDatabase.execSQL(SqlTable2);
@@ -60,6 +61,7 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
         ArrayList<String> busStop2 = new ArrayList<>();
         busNum.add("100");
         busNum.add("20");
+        //100號路線的
         busStop1.add("1.中山一路");
         busStop1.add("2.中山二路");
         busStop1.add("3.中山三路");
@@ -69,6 +71,7 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
         busStop1.add("7.臨海三路");
         busStop1.add("8.臨海四路");
         busStop1.add("9.建國路");
+        //20號路線的
         busStop2.add("1.中山一路");
         busStop2.add("2.中山二路");
         busStop2.add("3.中山三路");
@@ -86,17 +89,24 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
                     "VALUES('" + busNum.get(1) + "', '" + busStop2.get(j) + "', 0)";
             sqLiteDatabase.execSQL(addData);
         }
-        String addData = "INSERT INTO bus_getoff(License, busNum, busStop)" +
+        String addData = "INSERT INTO Bus(License, busNum, busStop)" +
                 "VALUES('uuu-1111', '100', '中山一路')";
         sqLiteDatabase.execSQL(addData);
-        System.out.println("成功了喔喔喔喔喔喔喔喔喔喔喔喔喔喔喔喔");
+        String addRecord1 = "INSERT INTO passenger(Pid, busNum, OnStop, OffStop, Date, getonTime, getoffTime, License)" +
+                "VALUES('111111', '100', '3.中山三路', '6.臨海二路', '2022-12-23', '12:51:25', '13:13:06', 'uuu-1111')";
+        sqLiteDatabase.execSQL(addRecord1);
+        String addRecord2 = "INSERT INTO passenger(Pid, busNum, OnStop, OffStop, Date, getonTime, getoffTime, License)" +
+                "VALUES('111111', '20', '3.中山三路', '9.青年一路', '2022-12-25', '11:31:48', '12:23:53', 'jid-2567')";
+        sqLiteDatabase.execSQL(addRecord2);
+        System.out.println("資料庫創建成功了喔喔喔喔喔喔喔喔喔喔喔喔喔喔喔喔");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         //String SQL = "DROP TABLE " + DataBaseTable;
         sqLiteDatabase.execSQL("DROP TABLE bus_geton");
-        sqLiteDatabase.execSQL("DROP TABLE bus_getoff");
+        sqLiteDatabase.execSQL("DROP TABLE Bus");
         sqLiteDatabase.execSQL("DROP TABLE passenger");
+        sqLiteDatabase.execSQL("DROP TABLE complain");
     }
 }

@@ -63,13 +63,16 @@ public class WaitingBus extends AppCompatActivity {
                 System.out.println("下一站:"+ nextStop);
             }
             cr.close();
-            db.execSQL("UPDATE bus_getoff SET busStop ='" + nextStop + "' WHERE busNum = '" + busNum + "'");
+            //那一站的上車人數歸零
+            db.execSQL("UPDATE bus_geton SET Count = 0 WHERE busStop = '" + OnStop + "' and busNum = '" + busNum + "'");
+            //讓公車到站了
+            db.execSQL("UPDATE Bus SET busStop ='" + nextStop + "' WHERE busNum = '" + busNum + "'");
             //----demo用
 
             try {
                 // 休眠 30 秒
                 TimeUnit.SECONDS.sleep(30);
-                Cursor c = db.rawQuery("SELECT License FROM bus_getoff where busStop = '" + stopStr + "%' and busNum = '" + busNum + "'", null);
+                Cursor c = db.rawQuery("SELECT License FROM Bus where busStop = '" + stopStr + "%' and busNum = '" + busNum + "'", null);
                 License = "";//獲得車牌號
                 while (c.moveToNext()){
                     License = c.getString(0);
@@ -90,7 +93,9 @@ public class WaitingBus extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sf= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String currentTime = sf.format(cal.getTime());
-        db.execSQL("UPDATE passenger SET License ='" + License + "', getonTime = '" + currentTime + "' WHERE Pid = '" + Pid + "' and busNum = '" + busNum + "' and OnStop = '" + OnStop + "' and OffStop is null");
+        String Date = currentTime.split(" ")[0];
+        String Time = currentTime.split(" ")[1];
+        db.execSQL("UPDATE passenger SET License ='" + License + "', getonTime = '" + Time + "',Date = '" + Date + "' WHERE Pid = '" + Pid + "' and busNum = '" + busNum + "' and OnStop = '" + OnStop + "' and OffStop is null");
         Intent on_intent = new Intent(this, OnBus.class);
         startActivity(on_intent);
         finish();
