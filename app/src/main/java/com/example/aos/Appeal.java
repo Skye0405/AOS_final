@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class Appeal extends AppCompatActivity {
-    TextView appeal;
     EditText location, time, bus_number, driver, user, contact, subject, content;
     Button cancel, send;
 
@@ -23,7 +22,6 @@ public class Appeal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appeal);
-        appeal = findViewById(R.id.mail);
         cancel = findViewById(R.id.previous);
         location = findViewById(R.id.location);
         time = findViewById(R.id.time);
