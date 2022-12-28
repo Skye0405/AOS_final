@@ -37,21 +37,22 @@ public class Driver extends AppCompatActivity {
         Cursor c = db.rawQuery("SELECT busStop FROM Bus where License = 'uuu-1111'", null);
         while (c.moveToNext()){
             busStop = c.getString(0);
-            System.out.println("下一站:"+ busStop);
+            System.out.println("即將抵達:" + busStop);
         }
         c.close();
-        station.setText(busStop);
+        station.setText("即將抵達\n" + busStop);
 
         //關門時->公車清空預約人數,更新公車位置
         leave.setOnClickListener(view -> {
-            String Sub_Num= busStop.split(".")[0];
+
+            String Sub_Num = busStop.substring(0, 1);
             int stopInt = Integer.valueOf(Sub_Num) + 1;
             if(stopInt > 9){
                 stopInt = 1;
             }
             String stopStr = Integer.toString(stopInt);
             //抓再下一站
-            Cursor cr = db.rawQuery("SELECT busStop FROM Bus where busStop like '" + stopStr + ".%' and busNum = '100'", null);
+            Cursor cr = db.rawQuery("SELECT busStop FROM bus_geton where busStop like '" + stopStr + ".%' and busNum = '100'", null);
             String nextStop = "";
             while (cr.moveToNext()){
                 nextStop = cr.getString(0);
@@ -70,9 +71,9 @@ public class Driver extends AppCompatActivity {
                 System.out.println("下站:"+ cs.getString(0));
             }
             cs.close();
-
+            busStop = nextStop;
             //顯示下一個站名
-            station.setText(nextStop);
+            station.setText("即將抵達\n" + nextStop);
             //停車需求
             need.setText("停車需求");
         });
@@ -80,29 +81,32 @@ public class Driver extends AppCompatActivity {
         //下站通知->抓上下車人
         next.setOnClickListener(view -> {
             //抓資料 顯示下一站需不需要停車(先找預約下車)
-            Cursor cs = db.rawQuery("SELECT Count(1) FROM passenger WHERE License = 'uuu-1111' and OffStop = '" + busStop + "' and getoffTime is null", null);
+            Cursor cs = db.rawQuery("SELECT count(*) FROM passenger WHERE License = 'uuu-1111' and OffStop = '" + busStop + "' and getoffTime is null", null);
             int Count = 0;
             while (cs.moveToNext()){
                 Count = Integer.valueOf(cs.getString(0));
-                System.out.println("預約下車人數"+ cs.getString(0));
+                System.out.println("預約下車人數:"+ cs.getString(0));
             }
             cs.close();
+            System.out.println("無人預約下車");
             //無人預約下車，找預約上車
             if (Count < 1){
                 cs = db.rawQuery("SELECT Count FROM bus_geton WHERE busNum = '100' and busStop = '" + busStop + "'", null);
                 while (cs.moveToNext()){
                     Count = Integer.valueOf(cs.getString(0));
-                    System.out.println("預約上車人數"+ cs.getString(0));
+                    System.out.println("預約上車人數:"+ cs.getString(0));
                 }
                 cs.close();
+                System.out.println("無人預約上車");
             }
+            System.out.println("預約人數:" + Count);
             //歸零預約上車人數，預防同路線很接近的車也抓到要停
             db.execSQL("UPDATE bus_geton SET Count = 0 WHERE busStop = '" + busStop + "' and busNum = '100'");
             //判斷要不要停車
             if(Count < 1) {
-                need.setText("請靠站停車");
-            }else {
                 need.setText("請前往下一站");
+            }else {
+                need.setText("請靠站停車");
             }
             //確認
             Cursor co = db.rawQuery("SELECT Count FROM bus_geton WHERE busStop = '" + busStop + "' and busNum = '100'", null);

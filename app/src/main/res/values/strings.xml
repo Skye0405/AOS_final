@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">AOS</string>
-    <string name="demo">測試</string>
+    <string name="demo">更新</string>
     <string name="movement">公車動態</string>
+    <string name="info">公車動態</string>
 
     <!--homepage-->
     <string name="title">神奇的公車APP</string>
@@ -13,6 +14,9 @@
     <string name="appeal">我有話要說</string>
     <string name="record">搭車紀錄</string>
     <string name="collection">集點</string>
+
+    <!--qrcode scanner-->
+    <string name="scanner">掃描站牌</string>
 
     <!--appeal-->
     <string name="text_hint">說些什麼</string>

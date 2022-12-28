@@ -56,9 +56,16 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
                 "Contact varchar (10)" +
                 ")";
         sqLiteDatabase.execSQL(SqlTable3);
+        String SqlTable4 = "CREATE TABLE IF NOT EXISTS point(" +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Pid varchar (10) not null," +
+                "Point INT DEFAULT 0 not null" +
+                ")";
+        sqLiteDatabase.execSQL(SqlTable4);
         ArrayList<String> busNum = new ArrayList<>();
         ArrayList<String> busStop1 = new ArrayList<>();
         ArrayList<String> busStop2 = new ArrayList<>();
+        ArrayList<Integer> CountA= new ArrayList<>();
         busNum.add("100");
         busNum.add("20");
         //100號路線的
@@ -81,16 +88,26 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
         busStop2.add("7.五福三路");
         busStop2.add("8.五福四路");
         busStop2.add("9.青年一路");
+        //Count
+        CountA.add(1);
+        CountA.add(1);
+        CountA.add(1);
+        CountA.add(0);
+        CountA.add(1);
+        CountA.add(1);
+        CountA.add(1);
+        CountA.add(1);
+        CountA.add(0);
         for(int j = 0; j < busStop1.size(); j++) {
             String addData = "INSERT INTO bus_geton(busNum, busStop, Count)" +
-                    "VALUES('" + busNum.get(0) + "', '" + busStop1.get(j) + "', 0)";
+                    "VALUES('" + busNum.get(0) + "', '" + busStop1.get(j) + "'," + CountA.get(j) + ")";
             sqLiteDatabase.execSQL(addData);
             addData = "INSERT INTO bus_geton(busNum, busStop, Count)" +
-                    "VALUES('" + busNum.get(1) + "', '" + busStop2.get(j) + "', 0)";
+                    "VALUES('" + busNum.get(1) + "', '" + busStop2.get(j) + "'," + CountA.get(j) + ")";
             sqLiteDatabase.execSQL(addData);
         }
         String addData = "INSERT INTO Bus(License, busNum, busStop)" +
-                "VALUES('uuu-1111', '100', '中山一路')";
+                "VALUES('uuu-1111', '100', '1.中山一路')";
         sqLiteDatabase.execSQL(addData);
         String addRecord1 = "INSERT INTO passenger(Pid, busNum, OnStop, OffStop, Date, getonTime, getoffTime, License)" +
                 "VALUES('111111', '100', '3.中山三路', '6.臨海二路', '2022-12-23', '12:51:25', '13:13:06', 'uuu-1111')";
@@ -98,6 +115,8 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
         String addRecord2 = "INSERT INTO passenger(Pid, busNum, OnStop, OffStop, Date, getonTime, getoffTime, License)" +
                 "VALUES('111111', '20', '3.中山三路', '9.青年一路', '2022-12-25', '11:31:48', '12:23:53', 'jid-2567')";
         sqLiteDatabase.execSQL(addRecord2);
+        String addRecord3 = "INSERT INTO point(Pid, Point) VALUES('111111', 4)";
+        sqLiteDatabase.execSQL(addRecord3);
         System.out.println("資料庫創建成功了喔喔喔喔喔喔喔喔喔喔喔喔喔喔喔喔");
     }
 

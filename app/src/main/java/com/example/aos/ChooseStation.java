@@ -70,8 +70,15 @@ public class ChooseStation extends AppCompatActivity {
             System.out.println("今天日期:"+ currentDate);
             db.execSQL("UPDATE passenger SET OffStop ='" + bus_Stop + "' WHERE Pid = '" + Pid + "' and busNum = '" + busNum + "' and OffStop is null");
 
-            //Intent on_intent = new Intent(this, OnBus.class);
-            //startActivity(on_intent);
+            //點數+1
+            db.execSQL("UPDATE point SET Point =Point + 1 WHERE Pid = '111111'");
+            Cursor cP = db.rawQuery("SELECT Point FROM point WHERE Pid = '111111'", null);
+            while (cP.moveToNext()){
+                System.out.println("Point:"+ cP.getString(0));
+            }
+            cP.close();
+            Intent on_intent = new Intent(this, OnBus.class);
+            startActivity(on_intent);
             finish();
         });
 

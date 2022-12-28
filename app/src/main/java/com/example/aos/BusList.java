@@ -26,7 +26,7 @@ public class BusList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buslist);
         DH = new SqlDataBaseHelper(this);
-        db = DH.getWritableDatabase();
+        db = DH.getReadableDatabase();
         queryBusDB();//查詢上車資料
 
         button = findViewById(R.id.button);
@@ -38,6 +38,13 @@ public class BusList extends AppCompatActivity {
     //查詢資料
     private void queryBusDB() {
         Listview1 = (ListView) findViewById(R.id.LV);
+        db = DH.getReadableDatabase();
+//測試
+        Cursor cr = db.rawQuery("SELECT Count FROM bus_geton WHERE busStop = '3.中山三路' and busNum = '100'", null);
+        while (cr.moveToNext()){
+            System.out.println("Count:"+ cr.getString(0));
+        }
+        cr.close();
         Cursor c = db.rawQuery("SELECT busNum, busStop, Count FROM bus_geton ORDER BY busNum", null);
         List<Map<String, Object>> items = new ArrayList<Map<String, Object>>();
         //放入ArrayList
@@ -46,6 +53,7 @@ public class BusList extends AppCompatActivity {
             Map<String, Object> item = new HashMap<String, Object>();
             item.put("busNum", c.getString(0) + "->" + c.getString(1));
             item.put("Count", "上車預約人數:" + c.getString(2));
+            System.out.println(c.getString(2));
             items.add(item);
             c.moveToNext();
         }

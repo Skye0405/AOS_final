@@ -38,7 +38,11 @@ public class OnBus extends AppCompatActivity {
 
         DH = new SqlDataBaseHelper(this);
         db = DH.getWritableDatabase();
-
+        Cursor cP = db.rawQuery("SELECT Point FROM point WHERE Pid = '111111'", null);
+        while (cP.moveToNext()){
+            collection.setText( cP.getString(0) + "點");
+        }
+        cP.close();
         System.out.println("opppppppp");
         /*
         while(OffStop.equals("")){
@@ -111,7 +115,8 @@ public class OnBus extends AppCompatActivity {
                 String Date = ct.substring(0, 10);
                 String Time = ct.substring(11, 19);
                 db.execSQL("UPDATE passenger SET getoffTime = '" + Time + "' WHERE Pid = '" + Pid + "' and busNum = '" + busNum + "' and OffStop = '" + OffStop + "' and Date = '" + Date + "' and getoffTime is null");
-
+                Intent main = new Intent(this, MainActivity.class);
+                startActivity(main);
                 finish();
             }
 
@@ -125,6 +130,12 @@ public class OnBus extends AppCompatActivity {
         appeal.setOnClickListener(view -> {
             Intent appeal_intent = new Intent(this, Appeal.class);
             startActivity(appeal_intent);
+        });
+
+
+        record.setOnClickListener(view -> {
+            Intent record_intent = new Intent(this, Record.class);
+            startActivity(record_intent);
         });
     }
 

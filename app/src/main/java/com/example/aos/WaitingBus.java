@@ -42,7 +42,11 @@ public class WaitingBus extends AppCompatActivity {
         DH = new SqlDataBaseHelper(this);
         db = DH.getWritableDatabase();
         //db.execSQL("DELETE FROM passenger WHERE Pid = '111111' and getoffTime is null");
-
+        Cursor cP = db.rawQuery("SELECT Point FROM point WHERE Pid = '111111'", null);
+        while (cP.moveToNext()){
+            collection.setText( cP.getString(0) + "點");
+        }
+        cP.close();
         //先找到預約的上車站
         Cursor cs = db.rawQuery("SELECT OnStop,busNum FROM passenger where Pid = '" + Pid + "' and getonTime is null", null);
         while (cs.moveToNext()){
@@ -61,13 +65,13 @@ public class WaitingBus extends AppCompatActivity {
         }
         String stopStr = Integer.toString(stopInt);
         //demo用---
-        Cursor cr = db.rawQuery("SELECT busStop FROM bus_geton where busStop like '" + stopStr + ".%' and busNum = '" + busNum + "'", null);
+        Cursor c1 = db.rawQuery("SELECT busStop FROM bus_geton where busStop like '" + stopStr + ".%' and busNum = '" + busNum + "'", null);
         nextStop = "";//預約的上車站的下一站
-        while (cr.moveToNext()){
-            nextStop = cr.getString(0);
+        while (c1.moveToNext()){
+            nextStop = c1.getString(0);
             System.out.println("下一站:"+ nextStop);
         }
-        cr.close();
+        c1.close();
         //那一站的上車人數歸零
         db.execSQL("UPDATE bus_geton SET Count = 0 WHERE busStop = '" + OnStop + "' and busNum = '" + busNum + "'");
         //讓公車到站了
@@ -113,7 +117,7 @@ public class WaitingBus extends AppCompatActivity {
             SimpleDateFormat sf= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String ct = sf.format(cal.getTime());
             String Date = ct.substring(0, 10);
-            String Time = ct.substring(12, 19);
+            String Time = ct.substring(11, 19);
             db.execSQL("UPDATE passenger SET License ='" + License + "', getonTime = '" + Time + "',Date = '" + Date + "' WHERE Pid = '" + Pid + "' and busNum = '" + busNum + "' and OnStop = '" + OnStop + "' and OffStop is null");
             System.out.println("tttttttttttttttt");
 
@@ -125,9 +129,9 @@ public class WaitingBus extends AppCompatActivity {
         //取消->取消預約上車
         cancel.setOnClickListener(view -> {
             //刪除預約資料
-            db.execSQL("DELETE FROM passenger WHERE Pid = '" + Pid + "' and OnStop = '" + OnStop + "' and getonTime is null");
+            db.execSQL("DELETE FROM passenger WHERE Pid = '" + Pid + "' and OnStop = '" + OnStop + "' and getonTime is null and busNum = '" + busNum + "'");
             //上車人數-1
-            db.execSQL("UPDATE bus_geton SET Count =Count - 1 WHERE busStop = '" + OnStop + "'");
+            db.execSQL("UPDATE bus_geton SET Count =Count - 1 WHERE busStop = '" + OnStop + "'  and busNum = '" + busNum + "'");
             Cursor c = db.rawQuery("SELECT Pid,busNum,OnStop FROM passenger WHERE Pid = '" + Pid + "' and getonTime is null", null);
             //確定有沒有刪
             while (c.moveToNext()){
@@ -135,6 +139,14 @@ public class WaitingBus extends AppCompatActivity {
                 System.out.println("busNum:"+ c.getString(1));
                 System.out.println("OnStop:"+ c.getString(2));
             }
+
+            //點數+1
+            db.execSQL("UPDATE point SET Point =Point - 1 WHERE Pid = '111111'");
+            Cursor cp = db.rawQuery("SELECT Point FROM point WHERE Pid = '111111'", null);
+            while (cp.moveToNext()){
+                System.out.println("Point:"+ cp.getString(0));
+            }
+            cp.close();
             System.out.println("result:None");
             c.close();
             finish();
@@ -143,6 +155,10 @@ public class WaitingBus extends AppCompatActivity {
         appeal.setOnClickListener(view -> {
             Intent appeal_intent = new Intent(this, Appeal.class);
             startActivity(appeal_intent);
+        });
+        record.setOnClickListener(view -> {
+            Intent record_intent = new Intent(this, Record.class);
+            startActivity(record_intent);
         });
     }
 }

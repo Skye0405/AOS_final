@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     Button scan;
     Button appeal, record, collection;
     Button driver, movement;
+    SqlDataBaseHelper DH = null;
+    SQLiteDatabase db ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +43,21 @@ public class MainActivity extends AppCompatActivity {
         driver = findViewById(R.id.driver);
         movement = findViewById(R.id.movement);
 
+        DH = new SqlDataBaseHelper(this);
+        db = DH.getWritableDatabase();
+        Cursor cP = db.rawQuery("SELECT Point FROM point WHERE Pid = '111111'", null);
+        while (cP.moveToNext()){
+            collection.setText( cP.getString(0) + "點");
+        }
+        cP.close();
+        //collection.setText("即將抵達");//點數
+
+
         scan.setOnClickListener(view -> {
-            Intent scan_intent = new Intent(MainActivity.this, ChooseBus.class);
             //開啟相機 掃描QR code
-            startActivity(scan_intent);
+            //Intent scanner_intent = new Intent(MainActivity.this, QrcodeScanner.class);
+            Intent scanner_intent = new Intent(MainActivity.this, ChooseBus.class);//測試
+            startActivity(scanner_intent);
         });
 
         driver.setOnClickListener(view -> {
