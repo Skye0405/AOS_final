@@ -8,9 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    TextView title;
+    TextView title, collection;
     Button scan;
-    Button appeal, record, collection;
+    Button appeal, record;
     Button driver, movement;
 
     @Override
@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
         collection = findViewById(R.id.collection);
         driver = findViewById(R.id.driver);
         movement = findViewById(R.id.movement);
+
+        //集點點數
+        //points = [point]+" points";
+        //collection.setText(points);
 
         scan.setOnClickListener(view -> {
             //開啟相機 掃描QR code

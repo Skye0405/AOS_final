@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class OnBus extends AppCompatActivity {
-    TextView title, on_bus;
-    Button appeal, record, collection;
+    TextView title, on_bus, collection;
+    Button appeal, record;
     Button arrive, destination;
 
     @Override
@@ -23,6 +23,10 @@ public class OnBus extends AppCompatActivity {
         collection = findViewById(R.id.collection);
         destination = findViewById(R.id.destination);
         arrive = findViewById(R.id.arrive);
+
+        //集點點數
+        //points = [point]+" points";
+        //collection.setText(points);
 
         //檢查資料庫變動 直到公車到站
 

@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title"
+        android:textColor="@color/black"
         android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,13 +62,13 @@
         app:layout_constraintEnd_toStartOf="@+id/collection"
         app:layout_constraintStart_toEndOf="@+id/appeal" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <TextView
         android:id="@+id/collection"
         android:layout_width="0dp"
         android:layout_height="70dp"
-        android:backgroundTint="#074DFF"
+        android:gravity="center"
         android:text="@string/collection"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/record"
         app:layout_constraintEnd_toEndOf="parent"

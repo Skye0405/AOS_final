@@ -8,9 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class WaitingBus extends AppCompatActivity {
-    TextView title, wait;
+    TextView title, wait, collection;
     Button cancel;
-    Button appeal, record, collection;
+    Button appeal, record;
     Button arrive;
 
     @Override
@@ -24,6 +24,10 @@ public class WaitingBus extends AppCompatActivity {
         record = findViewById(R.id.record);
         collection = findViewById(R.id.collection);
         arrive = findViewById(R.id.arrive);
+
+        //集點點數
+        //points = [point]+" points";
+        //collection.setText(points);
 
         arrive.setOnClickListener(view -> {
             //檢查資料庫變動 直到公車到站

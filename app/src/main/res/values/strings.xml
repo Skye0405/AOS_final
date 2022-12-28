@@ -12,7 +12,7 @@
     <string name="previous">上一頁</string>
     <string name="appeal">我有話要說</string>
     <string name="record">搭車紀錄</string>
-    <string name="collection">集點</string>
+    <string name="collection">0 points</string>
 
     <!--qrcode scanner-->
     <string name="scanner">掃描站牌</string>
