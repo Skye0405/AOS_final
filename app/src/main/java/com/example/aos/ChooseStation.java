@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ChooseStation extends AppCompatActivity {
     TextView choose_station;
@@ -34,7 +36,6 @@ public class ChooseStation extends AppCompatActivity {
         db = DH.getWritableDatabase();
         //抓公車路
         Cursor cs = db.rawQuery("SELECT busNum FROM passenger where Pid = '" + Pid + "' and OffStop is null", null);
-
         while (cs.moveToNext()){
             busNum = cs.getString(0);
             System.out.println("公車號:"+ cs.getString(0));
@@ -63,7 +64,14 @@ public class ChooseStation extends AppCompatActivity {
         enter.setOnClickListener(view -> {
             //預約下車站入資料庫
             String bus_Stop = (String)station.getSelectedItem(); //選中的選項
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sf= new SimpleDateFormat("yyyy-MM-dd");
+            String currentDate = sf.format(cal.getTime());
+            System.out.println("今天日期:"+ currentDate);
             db.execSQL("UPDATE passenger SET OffStop ='" + bus_Stop + "' WHERE Pid = '" + Pid + "' and busNum = '" + busNum + "' and OffStop is null");
+
+            //Intent on_intent = new Intent(this, OnBus.class);
+            //startActivity(on_intent);
             finish();
         });
 

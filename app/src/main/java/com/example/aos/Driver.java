@@ -19,7 +19,7 @@ public class Driver extends AppCompatActivity {
     int i=0;
     SqlDataBaseHelper DH = null;
     SQLiteDatabase db ;
-    String busStop = "";
+    String busStop = "";//下一站
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +33,8 @@ public class Driver extends AppCompatActivity {
 
         DH = new SqlDataBaseHelper(this);
         db = DH.getWritableDatabase();
+        //抓即將抵達的站
         Cursor c = db.rawQuery("SELECT busStop FROM Bus where License = 'uuu-1111'", null);
-        busStop = "";//獲得車牌號
         while (c.moveToNext()){
             busStop = c.getString(0);
             System.out.println("下一站:"+ busStop);
@@ -42,7 +42,7 @@ public class Driver extends AppCompatActivity {
         c.close();
         station.setText(busStop);
 
-        //關門時->公車清空預約人數,更新公車位置，更新乘客下車時間
+        //關門時->公車清空預約人數,更新公車位置
         leave.setOnClickListener(view -> {
             String Sub_Num= busStop.split(".")[0];
             int stopInt = Integer.valueOf(Sub_Num) + 1;
@@ -50,7 +50,8 @@ public class Driver extends AppCompatActivity {
                 stopInt = 1;
             }
             String stopStr = Integer.toString(stopInt);
-            Cursor cr = db.rawQuery("SELECT busStop FROM bus_geton where busStop like '" + stopStr + ".%' and busNum = '100'", null);
+            //抓再下一站
+            Cursor cr = db.rawQuery("SELECT busStop FROM Bus where busStop like '" + stopStr + ".%' and busNum = '100'", null);
             String nextStop = "";
             while (cr.moveToNext()){
                 nextStop = cr.getString(0);
@@ -58,24 +59,13 @@ public class Driver extends AppCompatActivity {
             }
             System.out.println("busStop:"+ busStop);
             System.out.println("nextStop:"+ nextStop);
-            //bus_geton人數歸零
+
+            //Bus上車預約人數歸零
             db.execSQL("UPDATE bus_geton SET Count = 0 WHERE busStop = '" + busStop + "' and busNum = '100'");
             //Bus更新位置
             db.execSQL("UPDATE Bus SET busStop = '" + nextStop + "' WHERE License = 'uuu-1111'");
-            //passengere更新下車時間
-            Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sf= new SimpleDateFormat("hh:mm:ss");
-            String currenttime = sf.format(cal.getTime());
-            db.execSQL("UPDATE passenger SET getoffTime = '" + currenttime + "' WHERE License = 'uuu-1111' and OnStop = '" + busStop + "' and getoffTime is null");// and getoffTime is null
-
-            //確認乘客紀錄更新成功
-            Cursor cs = db.rawQuery("SELECT Pid, getoffTime FROM passenger WHERE License = 'uuu-1111'", null);
-            while (cs.moveToNext()){
-                System.out.println("Pid:"+ cs.getString(0));
-                System.out.println("getoffTime:"+ cs.getString(1));
-            }
             //確認站牌更新成功
-            cs = db.rawQuery("SELECT busStop FROM Bus WHERE License = 'uuu-1111'", null);
+            Cursor cs = db.rawQuery("SELECT busStop FROM Bus WHERE License = 'uuu-1111'", null);
             while (cs.moveToNext()){
                 System.out.println("下站:"+ cs.getString(0));
             }
@@ -114,9 +104,10 @@ public class Driver extends AppCompatActivity {
             }else {
                 need.setText("請前往下一站");
             }
-            Cursor co = db.rawQuery("SELECT busStop FROM Bus WHERE License = 'uuu-1111'", null);
+            //確認
+            Cursor co = db.rawQuery("SELECT Count FROM bus_geton WHERE busStop = '" + busStop + "' and busNum = '100'", null);
             while (co.moveToNext()){
-                System.out.println("下一站:"+ co.getString(0));
+                System.out.println("更新後預約上車人數:"+ Count);
             }
             co.close();
         });

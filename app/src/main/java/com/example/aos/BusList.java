@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -15,9 +16,10 @@ import java.util.Map;
 
 public class BusList extends AppCompatActivity {
 
-    public SqlDataBaseHelper DH = null;
-    public SQLiteDatabase db ;
-    public ListView Listview1 ;
+    SqlDataBaseHelper DH = null;
+    SQLiteDatabase db ;
+    ListView Listview1 ;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +28,17 @@ public class BusList extends AppCompatActivity {
         DH = new SqlDataBaseHelper(this);
         db = DH.getWritableDatabase();
         queryBusDB();//查詢上車資料
+
+        button = findViewById(R.id.button);
+
+
+        button.setOnClickListener(view -> finish());
     }
 
     //查詢資料
     private void queryBusDB() {
         Listview1 = (ListView) findViewById(R.id.LV);
         Cursor c = db.rawQuery("SELECT busNum, busStop, Count FROM bus_geton ORDER BY busNum", null);
-        //Cursor c= db.query("bus_geton", new String[]{"busNum", "busStop", "Count"}, null, null, null, null, new String(busNum), null);
         List<Map<String, Object>> items = new ArrayList<Map<String, Object>>();
         //放入ArrayList
         c.moveToFirst();
@@ -55,4 +61,5 @@ public class BusList extends AppCompatActivity {
         );
         Listview1.setAdapter(SA);
     }
+
 }

@@ -33,7 +33,9 @@ public class ChooseBus extends AppCompatActivity {
         //讀取資料庫 該站點所有公車車號
         DH = new SqlDataBaseHelper(this);
         db = DH.getWritableDatabase();
-        String bus_Stop ="1.中山一路"; //要帶入站名(busStop)->qrcode
+        db.execSQL("DELETE FROM passenger WHERE Pid = '111111' and getonTime is null");
+
+        String bus_Stop ="3.中山三路"; //要帶入站名(busStop)->qrcode
         Cursor cs = db.rawQuery("SELECT busNum FROM bus_geton where busStop = '" + bus_Stop + "'", null);
         ArrayList<String> bus_list = new ArrayList<>();
         while (cs.moveToNext()){
