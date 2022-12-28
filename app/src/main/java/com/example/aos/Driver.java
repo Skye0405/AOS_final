@@ -77,7 +77,7 @@ public class Driver extends AppCompatActivity {
             //確認站牌更新成功
             cs = db.rawQuery("SELECT busStop FROM Bus WHERE License = 'uuu-1111'", null);
             while (cs.moveToNext()){
-                System.out.println("公車位置:"+ cs.getString(0));
+                System.out.println("下站:"+ cs.getString(0));
             }
             cs.close();
 
@@ -106,11 +106,19 @@ public class Driver extends AppCompatActivity {
                 }
                 cs.close();
             }
+            //歸零預約上車人數，預防同路線很接近的車也抓到要停
+            db.execSQL("UPDATE bus_geton SET Count = 0 WHERE busStop = '" + busStop + "' and busNum = '100'");
+            //判斷要不要停車
             if(Count < 1) {
                 need.setText("請靠站停車");
             }else {
                 need.setText("請前往下一站");
             }
+            Cursor co = db.rawQuery("SELECT busStop FROM Bus WHERE License = 'uuu-1111'", null);
+            while (co.moveToNext()){
+                System.out.println("下一站:"+ co.getString(0));
+            }
+            co.close();
         });
         previous.setOnClickListener(view -> finish());
 

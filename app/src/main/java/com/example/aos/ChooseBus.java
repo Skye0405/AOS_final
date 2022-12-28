@@ -45,16 +45,14 @@ public class ChooseBus extends AppCompatActivity {
                 new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, bus_list);
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
         scan.setAdapter(adapter);
-
+        //選擇確定後存入資料庫
         enter.setOnClickListener(view -> {
-            //存入資料庫
             String Bus_Num = (String)scan.getSelectedItem(); //選中的選項
             String Pid = "111111";//乘客ID
             ContentValues values = new ContentValues();
             values.put("Pid",Pid);
             values.put("busNum",Bus_Num);
             values.put("OnStop",bus_Stop);
-            //沒有加License因這裡不知道他上哪台，沒有加getonTime因為這裡是預約時間
             db.insert("passenger",null,values);
             //bus_geton上車人數+1
             db.execSQL("UPDATE bus_geton SET Count =Count + 1 WHERE busStop = '" + bus_Stop + "' and busNum = '" + Bus_Num + "'");
