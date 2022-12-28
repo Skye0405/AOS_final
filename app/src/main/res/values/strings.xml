@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AOS</string>
     <string name="demo">測試</string>
+    <string name="movement">公車動態</string>
 
     <!--homepage-->
     <string name="title">神奇的公車APP</string>
@@ -33,7 +34,7 @@
     <string name="record_date">日期</string>
     <string name="record_on_time">上車時間</string>
     <string name="record_off_time">下車時間</string>
-    <string name="record_license">憑證</string>
+    <string name="record_license">車牌</string>
 
     <!--waiting bus-->
     <string name="waiting_bus">等待\n公車</string>

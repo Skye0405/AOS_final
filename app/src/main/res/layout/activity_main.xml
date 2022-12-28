@@ -85,4 +85,18 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TextContrastCheck" />
 
+    <Button
+        android:id="@+id/movement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/purple_500"
+        android:text="@string/movement"
+        android:textColor="#ffffff"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
