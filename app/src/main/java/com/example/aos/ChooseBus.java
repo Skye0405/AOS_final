@@ -30,8 +30,8 @@ public class ChooseBus extends AppCompatActivity {
         enter = findViewById(R.id.enter);//確定按鈕
         scan = findViewById(R.id.wait);//下拉式選單
 
-        //String bus_Stop = getIntent().getStringExtra("STATION"); //要帶入站名(busStop)->qrcode
-        String bus_Stop ="3.中山三路";
+        String bus_Stop = getIntent().getStringExtra("STATION"); //要帶入站名(busStop)->qrcode
+        //String bus_Stop ="3.中山三路";
         station.setText(bus_Stop);
         //讀取資料庫 該站點所有公車車號
         DH = new SqlDataBaseHelper(this);

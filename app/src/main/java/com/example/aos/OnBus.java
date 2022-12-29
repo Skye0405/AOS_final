@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class OnBus extends AppCompatActivity {
     TextView title, on_bus;
     Button appeal, record, collection;
-    Button arrive, destination;
+    Button arrive, destination, info;
     String Pid = "111111";//乘客ID
     SqlDataBaseHelper DH = null;
     SQLiteDatabase db ;
@@ -35,6 +35,7 @@ public class OnBus extends AppCompatActivity {
         collection = findViewById(R.id.collection);
         destination = findViewById(R.id.destination);
         arrive = findViewById(R.id.arrive);
+        info = findViewById(R.id.info);
 
         DH = new SqlDataBaseHelper(this);
         db = DH.getWritableDatabase();
@@ -43,41 +44,9 @@ public class OnBus extends AppCompatActivity {
             collection.setText( cP.getString(0) + "點");
         }
         cP.close();
-        System.out.println("opppppppp");
-        /*
-        while(OffStop.equals("")){
-            Cursor cs = db.rawQuery("SELECT OffStop,busNum,License FROM passenger where Pid = '" + Pid + "' and OffStop is not null and getoffTime is null", null);
-            while (cs.moveToNext()){
-                OffStop = cs.getString(0);
-                busNum = cs.getString(1);
-                License = cs.getString(1);
-                System.out.println("預約的下車站:"+ cs.getString(0));
-            }
-            cs.close();
-        }
-        while(1 == 1){
-            //懶得改...就用車牌當到站吧
-            try {
-                // 休眠 30 秒
-                TimeUnit.SECONDS.sleep(30);
-                Cursor c = db.rawQuery("SELECT License FROM Bus where busStop = '" + nextStop + "' and busNum = '" + busNum + "'", null);
-                License = "";//獲得車牌號
-                while (c.moveToNext()){
-                    License = c.getString(0);
-                    System.out.println("車牌:"+ c.getString(0));
-                }
-                c.close();
-                if(!License.equals("")){
-                    //找到車牌了
-                    break;
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }
- */
+        //點選更新
         arrive.setOnClickListener(view -> {
+            //取得下車站
             Cursor cs = db.rawQuery("SELECT OffStop,busNum,License FROM passenger where Pid = '111111' and OffStop is not null and getoffTime is null", null);
             while (cs.moveToNext()){
                 OffStop = cs.getString(0);
@@ -115,7 +84,7 @@ public class OnBus extends AppCompatActivity {
                 String Date = ct.substring(0, 10);
                 String Time = ct.substring(11, 19);
                 db.execSQL("UPDATE passenger SET getoffTime = '" + Time + "' WHERE Pid = '" + Pid + "' and busNum = '" + busNum + "' and OffStop = '" + OffStop + "' and Date = '" + Date + "' and getoffTime is null");
-                Intent main = new Intent(this, MainActivity.class);
+                Intent main = new Intent(OnBus.this, MainActivity.class);
                 startActivity(main);
                 finish();
             }
@@ -132,6 +101,10 @@ public class OnBus extends AppCompatActivity {
             startActivity(appeal_intent);
         });
 
+        info.setOnClickListener(view -> {
+            Intent appeal_intent = new Intent(this, BusList.class);
+            startActivity(appeal_intent);
+        });
 
         record.setOnClickListener(view -> {
             Intent record_intent = new Intent(this, Record.class);

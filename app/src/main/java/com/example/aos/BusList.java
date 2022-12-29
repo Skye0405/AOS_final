@@ -39,12 +39,6 @@ public class BusList extends AppCompatActivity {
     private void queryBusDB() {
         Listview1 = (ListView) findViewById(R.id.LV);
         db = DH.getReadableDatabase();
-//測試
-        Cursor cr = db.rawQuery("SELECT Count FROM bus_geton WHERE busStop = '3.中山三路' and busNum = '100'", null);
-        while (cr.moveToNext()){
-            System.out.println("Count:"+ cr.getString(0));
-        }
-        cr.close();
         Cursor c = db.rawQuery("SELECT busNum, busStop, Count FROM bus_geton ORDER BY busNum", null);
         List<Map<String, Object>> items = new ArrayList<Map<String, Object>>();
         //放入ArrayList

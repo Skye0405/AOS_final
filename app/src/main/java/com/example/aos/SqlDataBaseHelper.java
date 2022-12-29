@@ -109,6 +109,9 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
         String addData = "INSERT INTO Bus(License, busNum, busStop)" +
                 "VALUES('uuu-1111', '100', '1.中山一路')";
         sqLiteDatabase.execSQL(addData);
+        String addData4 = "INSERT INTO Bus(License, busNum, busStop)" +
+                "VALUES('jid-2567', '20', '1.中山一路')";
+        sqLiteDatabase.execSQL(addData4);
         String addRecord1 = "INSERT INTO passenger(Pid, busNum, OnStop, OffStop, Date, getonTime, getoffTime, License)" +
                 "VALUES('111111', '100', '3.中山三路', '6.臨海二路', '2022-12-23', '12:51:25', '13:13:06', 'uuu-1111')";
         sqLiteDatabase.execSQL(addRecord1);

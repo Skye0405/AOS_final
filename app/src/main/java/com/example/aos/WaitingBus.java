@@ -19,7 +19,7 @@ public class WaitingBus extends AppCompatActivity {
     TextView title, wait;
     Button cancel;
     Button appeal, record, collection;
-    Button arrive;
+    Button arrive, bus;
     String Pid = "111111";//乘客ID
     SqlDataBaseHelper DH = null;
     SQLiteDatabase db ;
@@ -38,6 +38,7 @@ public class WaitingBus extends AppCompatActivity {
         record = findViewById(R.id.record);
         collection = findViewById(R.id.collection);
         arrive = findViewById(R.id.arrive);
+        bus = findViewById(R.id.bus);
 
         DH = new SqlDataBaseHelper(this);
         db = DH.getWritableDatabase();
@@ -47,18 +48,20 @@ public class WaitingBus extends AppCompatActivity {
             collection.setText( cP.getString(0) + "點");
         }
         cP.close();
-        //先找到預約的上車站
+        //先找到預約的上車站，公車號
         Cursor cs = db.rawQuery("SELECT OnStop,busNum FROM passenger where Pid = '" + Pid + "' and getonTime is null", null);
         while (cs.moveToNext()){
             OnStop = cs.getString(0);
             busNum = cs.getString(1);
             System.out.println("預約的上車站:"+ OnStop);
+            System.out.println("預約的公車號:"+ busNum);
         }
         cs.close();
 
-        //檢查資料庫變動 直到公車到站(待檢查)
-        String Sub_Num = OnStop.substring(0, 1);
-        System.out.println("站數:"+ Sub_Num);
+        //檢查資料庫變動 直到公車到站
+        //找下一站
+        String Sub_Num = OnStop.substring(0, 1);//取第一個數字
+        System.out.println("目前站數:"+ Sub_Num);
         int stopInt = Integer.valueOf(Sub_Num) + 1;
         if(stopInt > 9){
             stopInt = 1;
@@ -72,39 +75,14 @@ public class WaitingBus extends AppCompatActivity {
             System.out.println("下一站:"+ nextStop);
         }
         c1.close();
-        //那一站的上車人數歸零
-        db.execSQL("UPDATE bus_geton SET Count = 0 WHERE busStop = '" + OnStop + "' and busNum = '" + busNum + "'");
-        //讓公車到站了
-        db.execSQL("UPDATE Bus SET busStop ='" + nextStop + "' WHERE busNum = '" + busNum + "'");
-        //----demo用
-        /*
-        while(1 == 1){
-
-            try {
-                // 休眠 30 秒
-                TimeUnit.SECONDS.sleep(30);
-                Cursor c = db.rawQuery("SELECT License FROM Bus where busStop = '" + stopStr + "%' and busNum = '" + busNum + "'", null);
-                License = "";//獲得車牌號
-                while (c.moveToNext()){
-                    License = c.getString(0);
-                    System.out.println("車牌:"+ cs.getString(0));
-                }
-                c.close();
-                if(!License.equals("")){
-                    //找到車牌了
-                    break;
-                }
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-         */
 
         arrive.setOnClickListener(view -> {
-            System.out.println("logggggggggggggggg");
+            //----demo用
+            System.out.println("讓公車到站");
+            //那一站的上車人數歸零
+            db.execSQL("UPDATE bus_geton SET Count = 0 WHERE busStop = '" + OnStop + "' and busNum = '" + busNum + "'");
+            //讓公車到站了
+            db.execSQL("UPDATE Bus SET busStop ='" + nextStop + "' WHERE busNum = '" + busNum + "'");
             Cursor c = db.rawQuery("SELECT License FROM Bus where busStop = '" + nextStop + "' and busNum = '" + busNum + "'", null);
             License = "";//獲得車牌號
             while (c.moveToNext()){
@@ -119,7 +97,7 @@ public class WaitingBus extends AppCompatActivity {
             String Date = ct.substring(0, 10);
             String Time = ct.substring(11, 19);
             db.execSQL("UPDATE passenger SET License ='" + License + "', getonTime = '" + Time + "',Date = '" + Date + "' WHERE Pid = '" + Pid + "' and busNum = '" + busNum + "' and OnStop = '" + OnStop + "' and OffStop is null");
-            System.out.println("tttttttttttttttt");
+            System.out.println("passenger更新");
 
             Intent on_intent = new Intent(this, OnBus.class);
             startActivity(on_intent);
@@ -154,6 +132,10 @@ public class WaitingBus extends AppCompatActivity {
 
         appeal.setOnClickListener(view -> {
             Intent appeal_intent = new Intent(this, Appeal.class);
+            startActivity(appeal_intent);
+        });
+        bus.setOnClickListener(view -> {
+            Intent appeal_intent = new Intent(this, BusList.class);
             startActivity(appeal_intent);
         });
         record.setOnClickListener(view -> {

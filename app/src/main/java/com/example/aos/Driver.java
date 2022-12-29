@@ -33,6 +33,7 @@ public class Driver extends AppCompatActivity {
 
         DH = new SqlDataBaseHelper(this);
         db = DH.getWritableDatabase();
+
         //抓即將抵達的站
         Cursor c = db.rawQuery("SELECT busStop FROM Bus where License = 'uuu-1111'", null);
         while (c.moveToNext()){
