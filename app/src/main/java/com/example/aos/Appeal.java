@@ -54,11 +54,13 @@ public class Appeal extends AppCompatActivity {
 
             //可能要加必填訊息未填的錯誤訊息(跳對話窗等等)
 
-
             //判斷必填資料 送資料庫(已完成)
             DH = new SqlDataBaseHelper(this);
             db = DH.getWritableDatabase();
             ContentValues values = new ContentValues();
+            if (s_location.isEmpty() || s_time.isEmpty() || s_bus_number.isEmpty() || s_subject.isEmpty() || s_content.isEmpty() ){
+                finish();
+            }
             values.put("Location",s_location);
             values.put("Time",s_time);
             values.put("License",s_bus_number);
