@@ -15,7 +15,7 @@ import java.util.Calendar;
 public class Driver extends AppCompatActivity {
     TextView station, need;
     Button leave, next;
-    Button previous;
+    Button previous, businfo;
     int i=0;
     SqlDataBaseHelper DH = null;
     SQLiteDatabase db ;
@@ -30,6 +30,8 @@ public class Driver extends AppCompatActivity {
         leave = findViewById(R.id.leave);
         next = findViewById(R.id.next);//下站通知
         previous = findViewById(R.id.previous);
+        businfo = findViewById(R.id.businfo);
+
 
         DH = new SqlDataBaseHelper(this);
         db = DH.getWritableDatabase();
@@ -118,6 +120,10 @@ public class Driver extends AppCompatActivity {
         });
         previous.setOnClickListener(view -> finish());
 
+        businfo.setOnClickListener(view -> {
+            Intent appeal_intent = new Intent(this, BusList.class);
+            startActivity(appeal_intent);
+        });
 
     }
 }

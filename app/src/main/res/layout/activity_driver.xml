@@ -18,6 +18,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/businfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="304dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/leave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
