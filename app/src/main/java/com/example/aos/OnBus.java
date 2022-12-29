@@ -51,7 +51,7 @@ public class OnBus extends AppCompatActivity {
             while (cs.moveToNext()){
                 OffStop = cs.getString(0);
                 busNum = cs.getString(1);
-                License = cs.getString(1);
+                License = cs.getString(2);
                 System.out.println("預約的下車站:"+ cs.getString(0));
             }
             cs.close();
